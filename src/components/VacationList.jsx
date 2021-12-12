@@ -14,27 +14,30 @@ const VacationList = () => {
   //     dispatch(setVacation(res.data));
   //   });
   // }, []);
+
   return (
-    <>
-      {' '}
-      <img
-        height="200px"
-        width="100%"
-        alt="dreamVacationImg"
-        src={dreamVacationImg}
-      />
-      <div style={{ width: '90%', margin: '0 auto' }}>
-        <br />
-        <br />
-        <Grid container spacing={2}>
-          {vacationsState.map((vacation) => (
-            <Grid key={vacation.id} item xs={4} md={3}>
-              <Vacation vacation={vacation} />
-            </Grid>
-          ))}
-        </Grid>
-      </div>
-    </>
+    vacationsState.length > 0 && (
+      <>
+        {' '}
+        <img
+          height="200px"
+          width="100%"
+          alt="dreamVacationImg"
+          src={dreamVacationImg}
+        />
+        <div style={{ width: '90%', margin: '0 auto' }}>
+          <br />
+          <br />
+          <Grid container spacing={2}>
+            {vacationsState.map((vacation) => (
+              <Grid key={vacation.id} item xs={4} md={3}>
+                <Vacation vacation={vacation} />
+              </Grid>
+            ))}
+          </Grid>
+        </div>
+      </>
+    )
   );
 };
 

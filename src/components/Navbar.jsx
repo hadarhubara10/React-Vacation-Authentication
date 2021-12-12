@@ -14,7 +14,7 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import vacationImg from '../images/vacations.png';
-import {  useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 const pages = ['Vacation', 'On Follow', 'Blog'];
 const settings = ['Profile', 'Logout'];
@@ -106,6 +106,7 @@ const Navbar = () => {
             {pages.map((page) => (
               <Button
                 key={page}
+                style={{ border: '1px solid #' }}
                 onClick={handleCloseNavMenu}
                 sx={{
                   my: 2,
