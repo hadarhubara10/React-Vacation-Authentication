@@ -1,10 +1,10 @@
-import axios from 'axios';
+// import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import Vacation from './Vacation';
 import Grid from '@mui/material/Grid';
 import dreamVacationImg from '../images/dreamVacation.jpg';
 import { useDispatch, useSelector } from 'react-redux';
-import { setVacation } from '../redux/actions/vacationAction';
+// import { setVacation } from '../redux/actions/vacationAction';
 const VacationList = () => {
   const dispatch = useDispatch();
   const vacationsState = useSelector((state) => state.vacation);
@@ -30,7 +30,7 @@ const VacationList = () => {
           <br />
           <Grid container spacing={2}>
             {vacationsState.map((vacation) => (
-              <Grid key={vacation.id} item xs={4} md={3}>
+              <Grid key={vacation._id} item xs={6} md={3}>
                 <Vacation vacation={vacation} />
               </Grid>
             ))}

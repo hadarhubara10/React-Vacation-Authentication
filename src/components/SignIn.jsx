@@ -15,6 +15,7 @@ import { useForm } from 'react-hook-form';
 import { checkToken, signInGetToken } from '../services/signIn.service';
 import { useDispatch } from 'react-redux';
 import { setUser } from '../redux/actions/authenticationAction';
+import LoginWithGoogle from './LoginWithGoogle';
 const theme = createTheme();
 
 export default function SignIn() {
@@ -31,9 +32,9 @@ export default function SignIn() {
           dispatch(setUser(res.data));
           navigate('/home');
         })
-        .catch((err) => console.error(err));
+        .catch((err) => console.error(err.response.data));
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const {
@@ -43,23 +44,26 @@ export default function SignIn() {
   } = useForm();
 
   const signInToServer = (data) => {
-    console.log(data);
     // {
     // "email": "olivier@mail.com",
     // "password": "bestPassw0rd"
     // }
     signInGetToken(data.email, data.password)
       .then((res) => {
-        let token = res.data.accessToken;
-        let id = res.data.user.id;
-        console.log(token);
-        localStorage.setItem('token', token);
-        localStorage.setItem('id', id);
-        console.log(res.data);
-        // dispatch(setUser(res.data));
+        console.log(res);
+        console.log('res');
+        if (res.data.user) {
+          let token = res.data.token;
+          let _id = res.data.user._id;
+          localStorage.setItem('token', token);
+          localStorage.setItem('_id', _id);
+          localStorage.removeItem('googleToken');
+        }
       })
-      .then(() => navigate('/home'));
+      .then(() => navigate('/home'))
+      .catch((err) => console.error(err.response.data));
   };
+  // For dev
   console.log(errors);
 
   return (
@@ -138,6 +142,7 @@ export default function SignIn() {
             >
               Sign In
             </Button>
+            <LoginWithGoogle />
             <Grid container>
               <Grid item xs>
                 <LinkMUI href="#" variant="body2">

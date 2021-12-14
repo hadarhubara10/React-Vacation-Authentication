@@ -14,7 +14,7 @@ const VacationDetailes = () => {
   return (
     vacationFromRedux.length > 0 ? (
       <div>
-        {JSON.stringify(vacationFromRedux.find((vac) => vac.id == params.id))}
+        {JSON.stringify(vacationFromRedux.find((vac) => vac._id === params.id))}
         <Button onClick={handlerBackButton} variant="contained">
           Back
         </Button>

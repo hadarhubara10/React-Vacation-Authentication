@@ -16,6 +16,7 @@ import MenuItem from '@mui/material/MenuItem';
 import vacationImg from '../images/vacations.png';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
+import { useGoogleLogout } from 'react-google-login';
 const pages = ['Vacation', 'On Follow', 'Blog'];
 const settings = ['Profile', 'Logout'];
 
@@ -30,10 +31,26 @@ const Navbar = () => {
     if (event.target.innerHTML === 'Profile') {
       navigate('profile');
     } else {
-      localStorage.removeItem('token');
+      if (localStorage.getItem('token')) localStorage.removeItem('token');
+      else {
+        localStorage.removeItem('googleToken');
+        signOut();
+      }
       navigate('/signin');
     }
   };
+
+  const onLogoutSuccess = () => {
+    console.log('logout');
+  };
+  const onFailure = () => {
+    console.log('logout fail');
+  };
+  const { signOut } = useGoogleLogout({
+    clientId: process.env.REACT_APP_CLIENT_ID,
+    onLogoutSuccess: onLogoutSuccess,
+    onFailure: onFailure,
+  });
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -122,8 +139,11 @@ const Navbar = () => {
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                {/* {userData.img ? } check if have image */}
-                <Avatar round={true} size="60" name={userData.firstName} />
+                {userData.googleId ? (
+                  <Avatar round={true} size="60" googleId={userData.googleId} />
+                ) : (
+                  <Avatar round={true} size="60" name={userData.firstName} />
+                )}{' '}
               </IconButton>
             </Tooltip>
             <Menu

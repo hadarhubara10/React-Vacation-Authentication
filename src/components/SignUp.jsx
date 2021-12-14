@@ -28,10 +28,12 @@ export default function SignUp() {
     const { firstName, lastName, email, password } = data;
     signupService(firstName, lastName, email, password)
       .then((res) => {
-        console.log(res);
         alert('signup work!');
       })
-      .then(() => navigate('/signin'));
+      .then(() => navigate('/signin'))
+      .catch((err) => {
+        console.error(err.response.data);
+      });
   };
   console.log(errors);
   return (
